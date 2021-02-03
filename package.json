@@ -1,16 +1,24 @@
 {
   "name": "live-coding-node-checkpoint",
   "version": "1.0.0",
-  "description": "",
+  "description": "Initialisation d'un projet",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nathan-Vanstaevel/live-coding-node-checkpoint.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nathan-Vanstaevel/live-coding-node-checkpoint/issues"
+  },
+  "homepage": "https://github.com/Nathan-Vanstaevel/live-coding-node-checkpoint#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7"

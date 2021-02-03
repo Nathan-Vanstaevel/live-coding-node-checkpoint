@@ -7,85 +7,76 @@ app.use(express.json());
 
 // GET
 
-app.get('/api/album', (req, res) => {
-  connection.query('SELECT * from album', (err, results) => {
+app.get('/api/user', (req, res) => {
+  connection.query('SELECT * from user', (err, results) => {
     if (err) {
-      res.status(500).send('ERREUR lors de la récupération des albums');
+      res.status(500).send('ERREUR lors de la récupération du user');
     } else {
       res.json(results);
     }
   });
 });
 
-app.get('/api/track', (req, res) => {
-  connection.query('SELECT * from track', (err, results) => {
+app.get('/api/post', (req, res) => {
+  connection.query('SELECT * from post', (err, results) => {
     if (err) {
-      res.status(500).send('ERREUR lors de la récupération des albums');
+      res.status(500).send('ERREUR lors de la récupération des post');
     } else {
       res.json(results);
     }
   });
 });
 
-app.get('/api/album/:id', (req, res) => {
+app.get('/api/post/:id', (req, res) => {
   const id = req.params.id;
-  connection.query(`SELECT * from album WHERE id=${id}`, (err, results) => {
+  connection.query(`SELECT * from post WHERE id=${id}`, (err, results) => {
     if (err) {
-      res.status(500).send("ERREUR lors de la récupération d'un album");
+      res.status(500).send("ERREUR lors de la récupération d'un post");
     } else {
       res.json(results);
     }
   });
 });
 
-app.get('/api/album/:id/tracks', (req, res) => {
-  const id = req.params.id;
-  let genre = '';
-  let title = '';
-  let artist = '';
-
-  if (req.query.genre) {
-    genre = `AND a.genre="${req.query.genre}"`;
-  }
-
-  if (req.query.title) {
-    title = `AND a.album_title LIKE "%${req.query.title}%"`;
-  }
-
-  if (req.query.artist) {
-    artist = `AND a.artist LIKE "${req.query.artist}%"`;
-  }
-
-  connection.query(
-    `SELECT a.id, a.album_title, a.genre, a.artist, t.title FROM track t JOIN album a ON t.album_id = a.id WHERE a.id = ${id} ${genre} ${title} ${artist}`,
-    (err, results) => {
-      if (err) {
-        res.status(500).send('ERREUR lors de la récupération des tracks');
-      } else {
-        res.json(results);
-      }
+app.get('/api/post/:id/comment', (req, res) => {
+  connection.query('SELECT * from comment', (err, results) => {
+    if (err) {
+      res.status(500).send('ERREUR lors de la récupération des commentaire');
+    } else {
+      res.json(results);
     }
-  );
+  });
+});
+
+app.get('/api/post/:id/comment/:id', (req, res) => {
+  const id = req.params.id;
+  connection.query(`SELECT * from comment WHERE id=${id}`, (err, results) => {
+    if (err) {
+      res.status(500).send("ERREUR lors de la récupération d'un commentaire");
+    } else {
+      res.json(results);
+    }
+  });
 });
 
 // POST
 
-app.post('/api/album', (req, res) => {
+app.post('/api/post', (req, res) => {
   const formData = req.body;
-  connection.query('INSERT INTO album SET ?', formData, (err, results) => {
+  connection.query('INSERT INTO post SET ?', formData, (err, results) => {
     if (err) {
-      res.status(500).send("ERREUR lors de la sauvegarde d'un albums");
+      res.status(500).send('ERREUR lors de la publication');
     } else {
       res.sendStatus(200);
     }
   });
 });
 
-app.post('/api/track', (req, res) => {
+app.post('/api/comment', (req, res) => {
   const formData = req.body;
-  connection.query('INSERT INTO track SET ?', formData, (err, results) => {
+  connection.query('INSERT INTO comment SET ?', formData, (err, results) => {
     if (err) {
-      res.status(500).send("ERREUR lors de la sauvegarde d'une track");
+      res.status(500).send("ERREUR lors de la publication d'un commentaire");
     } else {
       res.sendStatus(200);
     }
@@ -94,11 +85,22 @@ app.post('/api/track', (req, res) => {
 
 // DELETE
 
-app.delete('/api/album/:id', (req, res) => {
+app.delete('/api/post/:id', (req, res) => {
   const id = req.params.id;
-  connection.query('DELETE FROM album WHERE id = ?', [id], (err) => {
+  connection.query('DELETE FROM post WHERE id = ?', [id], (err) => {
     if (err) {
-      res.status(500).send("ERREUR lors de la suppression d'un album");
+      res.status(500).send('ERREUR lors de la suppression du post');
+    } else {
+      res.sendStatus(200);
+    }
+  });
+});
+
+app.delete('/api/comment/:id', (req, res) => {
+  const id = req.params.id;
+  connection.query('DELETE FROM comment WHERE id = ?', [id], (err) => {
+    if (err) {
+      res.status(500).send('ERREUR lors de la suppression du commentaire');
     } else {
       res.sendStatus(200);
     }
@@ -107,15 +109,17 @@ app.delete('/api/album/:id', (req, res) => {
 
 // PUT
 
-app.put('/api/album/:id', (req, res) => {
+app.put('/api/post/:id', (req, res) => {
   const id = req.params.id;
   const formData = req.body;
   connection.query(
-    'UPDATE album SET ? WHERE id = ?',
+    'UPDATE post SET ? WHERE id = ?',
     [formData, id],
     (err, results) => {
       if (err) {
-        res.status(500).send("ERREUR lors de la modification d'un album");
+        res
+          .status(500)
+          .send('ERREUR lors de la modification de la publication');
       } else {
         res.sendStatus(200);
       }
@@ -123,15 +127,15 @@ app.put('/api/album/:id', (req, res) => {
   );
 });
 
-app.put('/api/track/:id', (req, res) => {
+app.put('/api/comment/:id', (req, res) => {
   const id = req.params.id;
   const formData = req.body;
   connection.query(
-    'UPDATE track SET ? WHERE id = ?',
+    'UPDATE comment SET ? WHERE id = ?',
     [formData, id],
     (err, results) => {
       if (err) {
-        res.status(500).send("ERREUR lors de la modification d'une track");
+        res.status(500).send('ERREUR lors de la modification du commentaire');
       } else {
         res.sendStatus(200);
       }

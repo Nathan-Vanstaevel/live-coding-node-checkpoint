@@ -1,21 +1,29 @@
-DROP DATABASE playlist_db;
-CREATE DATABASE playlist_db;
-USE playlist_db;
-CREATE TABLE `album` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `album_title` VARCHAR(255) NOT NULL,
-  `genre` VARCHAR(255) NOT NULL,
-  `picture` VARCHAR(255) NOT NULL,
-  `artist` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`)
-);
-CREATE TABLE `track` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(128) NOT NULL,
-  `youtube_url` VARCHAR(255) NOT NULL,
-  `album_id` INT,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`album_id`) REFERENCES `album`(`id`) ON DELETE CASCADE
-);
+-- DROP DATABASE instalone_db;
+-- CREATE DATABASE instalone_db;
+-- USE instalone_db;
+-- CREATE TABLE `user` (
+--   `id` INT NOT NULL AUTO_INCREMENT,
+--   `user_firstname` VARCHAR(255) NOT NULL,
+--   `user_lastname` VARCHAR(255) NOT NULL,
+--   `user_picture` VARCHAR(255) NOT NULL,
+--   PRIMARY KEY (`id`)
+-- );
+-- CREATE TABLE `post` (
+--   `id` INT NOT NULL AUTO_INCREMENT,
+--   `post_message` VARCHAR(255) NOT NULL,
+--   `post_picture` VARCHAR(255) NOT NULL,
+--   PRIMARY KEY (`id`)
+-- );
+-- CREATE TABLE `comment` (
+--   `id` INT NOT NULL AUTO_INCREMENT,
+--   `post_id` INT NOT NULL,
+--   `comment_message` VARCHAR(255) NOT NULL,
+--   PRIMARY KEY (`id`),
+--   FOREIGN KEY (`post_id`) REFERENCES `post`(`id`) ON DELETE CASCADE
+-- );
 -- Alternative a ON DELETE CASCADE qui ne supprime pas une track mais lui donne une valeur null
 -- ON DELETE SET NULL
+INSERT INTO
+  user
+VALUES
+  ('Nathan', 'Vanstaevel', 'profil-picture')
