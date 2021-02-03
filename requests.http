@@ -1,0 +1,63 @@
+GET http://localhost:8000/api/album
+
+###
+
+GET http://localhost:8000/api/track
+
+###
+
+GET http://localhost:8000/api/album/1
+
+###
+
+GET http://localhost:8000/api/album/1/tracks?genre=Techno&artist=Paul&title=lin
+
+###
+
+POST http://localhost:8000/api/album
+Content-Type: application/json
+
+{
+    "album_title": "Cloud Rider",
+    "genre": "Techno",
+    "picture": "https://images-na.ssl-images-amazon.com/images/I/81zO1orBK3L._SL1500_.jpg",
+    "artist": "Paul Kalkbrenner"
+}
+
+###
+
+POST http://localhost:8000/api/track
+Content-Type: application/json
+
+{
+    "title": "Cloud Rider",
+    "youtube_url": "https://www.youtube.com/watch?v=GWdEafWh5ME",
+    "album_id": 2
+}
+
+###
+
+DELETE http://localhost:8000/api/album/3
+
+###
+
+PUT http://localhost:8000/api/album/2
+Content-Type: application/json
+
+{
+    "album_title": "Seven",
+    "genre": "Techno",
+    "picture": "https://images-na.ssl-images-amazon.com/images/I/81zO1orBK3L._SL1500_.jpg",
+    "artist": "Paul Kalkbrenner"
+}
+
+###
+
+PUT http://localhost:8000/api/track/2
+Content-Type: application/json
+
+{
+    "title": "Sky & Sand",
+    "youtube_url": "https://www.youtube.com/watch?v=GWdEafWh5ME",
+    "album_id": 1
+}
