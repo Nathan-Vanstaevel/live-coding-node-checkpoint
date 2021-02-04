@@ -21,9 +21,6 @@
 --   PRIMARY KEY (`id`),
 --   FOREIGN KEY (`post_id`) REFERENCES `post`(`id`) ON DELETE CASCADE
 -- );
--- Alternative a ON DELETE CASCADE qui ne supprime pas une track mais lui donne une valeur null
--- ON DELETE SET NULL
-INSERT INTO
-  user
-VALUES
-  ('Nathan', 'Vanstaevel', 'profil-picture')
+-- Alternative a ON DELETE CASCADE qui ne supprime pas une track mais lui donne une valeur null ON DELETE
+-- SET
+--   NULL
